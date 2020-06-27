@@ -1,0 +1,10 @@
+salt-call:
+  log_level_logfile: quiet
+  file_client: local
+  root_dir: .
+  minion_id_caching: false
+  file_roots:
+    base:
+      - ./salt/states
+
+# vim: set filetype=yaml
