@@ -1,0 +1,11 @@
+log_level_logfile: quiet
+file_client: local
+root_dir: .
+minion_id_caching: false
+file_roots:
+  base:
+    - ./salt/states
+id: uai-builder
+state_output: mixed
+
+# vim: set filetype=yaml
