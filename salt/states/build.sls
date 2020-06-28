@@ -6,6 +6,7 @@
 {%- set cache_dir = salt['file.join'](opts['cachedir'], 'uai-builder') %}
 {%- set extraction_dir = salt['file.join'](cache_dir, 'iso_extracted', iso_name) %}
 {%- set build_timestamp = salt['status.time']('%FT%T')|replace(':', '-') %}
+{%- set iso_symlink = salt['file.join'](cache_dir, 'source.iso') %}
 {%- set iso_output_dir = salt['file.join'](grains['cwd'], 'output') %}
 {%- set iso_output_name = iso_name_base ~ '-' ~ build_timestamp ~ '.iso' %}
 {%- set iso_output_path = salt['file.join'](iso_output_dir, iso_output_name) %}
@@ -31,9 +32,19 @@ install-bsdtar:
   pkg.installed:
     - name: libarchive-tools
 
+# this is a workaround to allow evaluation of the cached ISO's path
+# during runtime using the __slot__ syntax. Using Slots allows only to append strings to their result, but not arbitrary string interpolation.
+# By using a symlink, which is then targeted for the ISO extraction command, this problem can be circumvented
+symlink-iso:
+  file.symlink:
+    - name:   {{ iso_symlink }}
+    - target: __slot__:salt:cp.is_cached({{ iso_url }})
+    - require:
+      - cache-directory
+
 extract-iso:
   cmd.run:
-    - name: /bin/bash -c "bsdtar --uname ${USER} -xf - < {{ salt['cp.is_cached'](iso_url) }}"
+    - name: /bin/bash -c "bsdtar --uname ${USER} -xf - <{{ iso_symlink }}"
     - cwd:  {{ extraction_dir }}
     - creates:
       # don't list all top-level directories of the ISO, but only a few key items
@@ -46,6 +57,7 @@ extract-iso:
       - install-bsdtar
       - extraction-directory
       - cache-iso
+      - symlink-iso
 
 {%- set user_data_file = salt['file.join'](extraction_dir, 'user-data') %}
 cloud-init-user-data:
