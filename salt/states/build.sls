@@ -73,17 +73,6 @@ extracted-iso-permissions:
     - require:
       - extract-iso
 
-{%- set user_data_file = salt['file.join'](extraction_dir, 'user-data') %}
-cloud-init-user-data:
-  file.managed:
-    - name: {{ user_data_file }}
-    - contents: |
-        identity:
-          hostname: test-01234
-    - require:
-      - extract-iso
-      - extracted-iso-permissions
-
 install-genisoimage:
   pkg.installed:
     - name: genisoimage
