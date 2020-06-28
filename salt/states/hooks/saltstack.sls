@@ -10,5 +10,5 @@ saltstack-apt-repo-gpg-key:
     - skip_verify: true
     - require:
       - extract-iso
-    - require_in:
+    - onchanges_in:
       - generate-custom-iso
