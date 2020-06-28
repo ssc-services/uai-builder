@@ -43,6 +43,7 @@ symlink-iso:
     - name:   {{ iso_symlink }}
     - target: __slot__:salt:cp.is_cached({{ iso_url }})
     - require:
+      - cache-iso
       - cache-directory
 
 extract-iso:
