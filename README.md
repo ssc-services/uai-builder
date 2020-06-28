@@ -13,6 +13,7 @@ After cloning this repository, change to the root directory of it (the same as t
 ```bash
 salt-call state.sls build
 ```
+The resulting ISO file will be located in `output/`
 
 ## Cleanup
 To remove any generated data, use the `clean` state:
