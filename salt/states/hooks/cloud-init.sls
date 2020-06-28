@@ -16,8 +16,11 @@ cloud-init-user-data:
   file.managed:
     - name: {{ user_data_file }}
     - contents: |
-        identity:
-          hostname: test-01234
+        #cloud-config
+        autoinstall:
+          version: 1
+          identity:
+            hostname: test-01234
     - require:
       - extract-iso
       - extracted-iso-permissions
