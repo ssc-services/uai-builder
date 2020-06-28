@@ -6,7 +6,7 @@
 {%- set cache_dir = salt['file.join'](opts['cachedir'], 'uai-builder') %}
 {%- set extraction_dir = salt['file.join'](cache_dir, 'iso_extracted', iso_name) %}
 {%- set build_timestamp = salt['status.time']('%FT%T')|replace(':', '-') %}
-{%- set iso_output_dir = salt['file.join'](salt['cmd.run']('/bin/bash -c "pwd"'), 'output') %}
+{%- set iso_output_dir = salt['file.join'](grains['cwd'], 'output') %}
 {%- set iso_output_name = iso_name_base ~ '-' ~ build_timestamp ~ '.iso' %}
 {%- set iso_output_path = salt['file.join'](iso_output_dir, iso_output_name) %}
 
