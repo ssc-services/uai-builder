@@ -62,6 +62,17 @@ extract-iso:
       - cache-iso
       - symlink-iso
 
+extracted-iso-permissions:
+  file.directory:
+    - name:     {{ extraction_dir }}
+    - makedirs: true
+    - recurse:
+      - mode
+    - dir_mode:  0770
+    - file_mode: 0660
+    - require:
+      - extract-iso
+
 {%- set user_data_file = salt['file.join'](extraction_dir, 'user-data') %}
 cloud-init-user-data:
   file.managed:
@@ -71,6 +82,7 @@ cloud-init-user-data:
           hostname: test-01234
     - require:
       - extract-iso
+      - extracted-iso-permissions
 
 install-genisoimage:
   pkg.installed:
@@ -79,13 +91,6 @@ install-genisoimage:
 output-directory:
   file.directory:
     - name: {{ iso_output_dir }}
-
-boot-image-file-writable:
-  file.managed:
-    - name: {{ salt['file.join'](extraction_dir, 'isolinux/isolinux.bin') }}
-    - mode: 0660
-    - require:
-      - extract-iso
 
 generate-custom-iso:
   cmd.run:
@@ -106,4 +111,3 @@ generate-custom-iso:
     - require:
       - install-genisoimage
       - output-directory
-      - boot-image-file-writable
