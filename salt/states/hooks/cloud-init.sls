@@ -1,6 +1,17 @@
 {%- from "build.sls" import extraction_dir %}
 
+{%- set meta_data_file = salt['file.join'](extraction_dir, 'meta-data') %}
 {%- set user_data_file = salt['file.join'](extraction_dir, 'user-data') %}
+cloud-init-meta-data:
+  file.managed:
+    - name: {{ meta_data_file }}
+    - replace: false
+    - require:
+      - extract-iso
+      - extracted-iso-permissions
+    - onchanges_in:
+      - generate-custom-iso
+
 cloud-init-user-data:
   file.managed:
     - name: {{ user_data_file }}
