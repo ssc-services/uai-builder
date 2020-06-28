@@ -67,7 +67,7 @@ cloud-init-user-data:
         identity:
           hostname: test-01234
     - require:
-      - cache-directory
+      - extract-iso
 
 install-genisoimage:
   pkg.installed:
@@ -81,6 +81,8 @@ boot-image-file-writable:
   file.managed:
     - name: {{ salt['file.join'](extraction_dir, 'isolinux/isolinux.bin') }}
     - mode: 0660
+    - require:
+      - extract-iso
 
 generate-custom-iso:
   cmd.run:
