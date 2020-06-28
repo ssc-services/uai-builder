@@ -9,7 +9,8 @@
 # See also: https://github.com/saltstack/salt/issues/57830
 file-and-directory-permissions:
   file.directory:
-    - name: {{ extraction_dir }}
+    - name:     {{ extraction_dir }}
+    - makedirs: true
     - recurse:
       - mode
     - dir_mode:  0770
