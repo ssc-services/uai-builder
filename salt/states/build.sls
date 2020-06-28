@@ -1,6 +1,7 @@
 {%- set ubuntu_release = '20.04' %}
 {%- set ubuntu_arch = 'amd64' %}
-{%- set iso_name = 'ubuntu-' ~ ubuntu_release ~ '-live-server-' ~ ubuntu_arch ~ '.iso' %}
+{%- set iso_name_base = 'ubuntu-' ~ ubuntu_release ~ '-live-server-' ~ ubuntu_arch %}
+{%- set iso_name = iso_name_base ~ '.iso' %}
 {%- set iso_url = 'https://releases.ubuntu.com/' ~ ubuntu_release ~ '/' ~ iso_name %}
 {%- set cache_dir = salt['file.join'](opts['cachedir'], 'uai-builder') %}
 {%- set extraction_dir = salt['file.join'](cache_dir, 'iso_extracted', iso_name) %}
