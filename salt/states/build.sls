@@ -11,6 +11,11 @@ cache-iso:
     - name: https://releases.ubuntu.com/{{ ubuntu_release }}/{{ iso_name }}
     - source_hash: https://releases.ubuntu.com/{{ ubuntu_release }}/SHA256SUMS
 
+cache-directory:
+  file.directory:
+    - name: {{ cache_dir }}
+    - makedirs: true
+
 extraction-directory:
   file.directory:
     - name: {{ extraction_dir }}
