@@ -11,6 +11,9 @@
 {%- set iso_output_name = iso_name_base ~ '-' ~ build_timestamp ~ '.iso' %}
 {%- set iso_output_path = salt['file.join'](iso_output_dir, iso_output_name) %}
 
+include:
+  - hooks
+
 cache-iso:
   file.cached:
     - name: https://releases.ubuntu.com/{{ ubuntu_release }}/{{ iso_name }}
