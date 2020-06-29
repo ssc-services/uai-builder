@@ -36,7 +36,7 @@ set-cloud-init-cmdline-param:
         label auto
           menu label ^Auto Install Ubuntu Server
           kernel /casper/vmlinuz
-          append initrd=/casper/initrd quiet autoinstall ds=nocloud;s=file:///user-data ---
+          append initrd=/casper/initrd quiet autoinstall ds=nocloud;s=file:///cdrom/ ---
     - require:
       - extract-iso
       - extracted-iso-permissions
