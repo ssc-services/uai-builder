@@ -1,0 +1,3 @@
+[submodule "salt/states/hooks/samples"]
+	path = salt/states/hooks/samples
+	url = git@github.com:ssc-services/uai-builder-sample-hooks.git
