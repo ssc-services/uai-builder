@@ -1,5 +1,5 @@
-{%- set ubuntu_release = '20.04' %}
-{%- set ubuntu_arch = 'amd64' %}
+{%- set ubuntu_release = salt['pillar.get']('release', '20.04.2') %}
+{%- set ubuntu_arch = salt['pillar.get']('arch', 'amd64') %}
 {%- set iso_name_base = 'ubuntu-' ~ ubuntu_release ~ '-live-server-' ~ ubuntu_arch %}
 {%- set iso_name = iso_name_base ~ '.iso' %}
 {%- set iso_url = 'https://releases.ubuntu.com/' ~ ubuntu_release ~ '/' ~ iso_name %}
@@ -63,6 +63,12 @@ extract-iso:
       - cache-iso
       - symlink-iso
 
+create-iso-custom-dir:
+  file.directory:
+    - name:     {{ extraction_dir }}/custom
+    - require:
+      - extract-iso
+
 extracted-iso-permissions:
   file.directory:
     - name:     {{ extraction_dir }}
@@ -72,7 +78,7 @@ extracted-iso-permissions:
     - dir_mode:  0770
     - file_mode: 0660
     - require:
-      - extract-iso
+      - create-iso-custom-dir
 
 install-genisoimage:
   pkg.installed:
