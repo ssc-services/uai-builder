@@ -3,6 +3,3 @@ output/
 salt/states/files/SHA256SUMS
 salt/states/files/*.iso
 salt/states/hooks/*
-!salt/states/hooks/
-!salt/states/hooks/samples/
-!salt/states/hooks/samples/*
