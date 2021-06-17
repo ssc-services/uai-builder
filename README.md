@@ -9,9 +9,11 @@ The following packages need to be installed for running it on Ubuntu:
 - `genisoimage`
 
 ## Usage
-After cloning this repository, change to the root directory of it (the same as the one containing this README) and execute:
+After cloning this repository either copy the contents of ``hooks-samples`` to ``hooks`` (necessary because of https://github.com/saltstack/salt/issues/6237) and customize it to your liking or checkout the custom states that should be applied to your image from a different repo into ``hooks``.
+
+Finally change to the root directory of it (the same as the one containing this README) and execute:
 ```bash
-salt-call state.sls build
+sudo salt-call state.sls build
 ```
 The resulting ISO file will be located in `output/`
 
